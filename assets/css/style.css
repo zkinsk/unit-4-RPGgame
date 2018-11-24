@@ -1,0 +1,68 @@
+#gameArea {
+    /* width: 100%; */
+    /* width: 100%; */
+    height: 700px;
+    background-image: url("../images/crait_background.png");
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: contain;
+    background-position: center top;
+    /* margin-left: auto;
+    margin-right: auto; */
+
+}
+.charBox {
+    position: relative;
+    width: 150px;
+    height: 125px;
+    border: black 2px solid;
+    overflow: visible;
+}
+.charName {
+    text-align: center;
+}
+.charImg {
+    text-align: center;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.charImg img {
+    width: 130px;
+}
+.pickChar .charHp{
+    color: red;
+ 
+}
+.charHp {
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-weight: bold;
+}
+.pickChar {
+    background-color: white;
+}
+.defRow, .comRow {
+    height: 47px;
+}
+.pickDefender {
+    background-color: red;
+}
+.pickDefender .charHp {
+    color: yellow;
+ 
+}
+.combatDefender {
+    color: white;
+    background-color: black;
+}
+.combatDefender .charHp {
+    color: white;
+
+}

@@ -1,0 +1,39 @@
+game starts with 4 characters at top to pick from
+    -border of all 4 character images is white
+    -character health is listed below image
+
+
+On player picking a characters
+    -other 3 characters move to row below
+    -border color changes to red
+    -player told to pick a defender
+
+
+On player picking defender 
+    -saber activation sound
+    -defender moved to bottom row 
+    -border color changed to black
+    -attack button created
+    -saber hum while attack is open
+    -player attack value stays as increased
+    
+
+On player clicking attack button
+    -saber clash sounds
+    -hit points removed from defender
+    -if defender survives, counter attack for fixed daamge and removes helth from player
+    -player attack falue increses by base value
+
+
+on defeat of defender 
+    -scream noooo! from vader
+    -attack button removed
+    -player told to choose another defender
+    -repeat on "picking defender"
+
+
+on defeat of player
+    -sound? 
+    -you lose dispayed
+    -attack button changed to re-start button
+    
