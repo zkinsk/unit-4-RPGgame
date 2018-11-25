@@ -1,18 +1,21 @@
 // character object
 var char = [
-    {name: "Mace Windu", hp: 120, baseAttack: 8, defense: 10, image: "assets/images/Windu_Angry.jpeg"},
-    {name: "Kit Fisto", hp: 100, baseAttack: 5, defense: 5, image: "assets/images/Kit_fisto_saber.jpg"},
-    {name: "Rey", hp: 150, baseAttack: 12, defense:12, image: "assets/images/rey-saber.jpg"},
-    {name: "Kylo Ren", hp: 180, baseAttack: 20, defense: 15, image: "assets/images/kylo-ren-mask.jpg"}];
+    {name: "Mace Windu", hp: 120, baseAttack: 8, defense: 30, image: "assets/images/Windu_Angry.jpeg"},
+    {name: "Kit Fisto", hp: 100, baseAttack: 10, defense: 15, image: "assets/images/Kit_fisto_saber.jpg"},
+    {name: "Rey", hp: 150, baseAttack: 12, defense:15, image: "assets/images/rey-saber.jpg"},
+    {name: "Kylo Ren", hp: 180, baseAttack: 15, defense: 10, image: "assets/images/kylo-ren-mask.jpg"}];
 
 // global variables
 var defenders = [0, 1, 2, 3]
 var pickedCharacter = false;
 var pickedDefender = false;
 var combatOver = false;
-var attackValue;
+var gameOver = false;
+var playerAttackValue;
+var attackAdder;
 var counterAttack;
-var playerChar;
+var playerCharVal;
+var playerHp;
 var defendChar;
 var defendersArr = [];
 var defendersTest = function (){
@@ -35,10 +38,13 @@ $( document ).ready(function() {
         $(".pickChar").on("click", function(){
             if (pickedCharacter === false){
                 pickedCharacter = true;
-                playerChar = ($(this).attr("val"));
-                defenders.splice(playerChar, 1);
+                playerCharVal = ($(this).attr("val"));
+                playerHp = char[playerCharVal].hp;
+                playerAttackValue = char[playerCharVal].baseAttack;
+                attackAdder = char[playerCharVal].baseAttack;
+                defenders.splice(playerCharVal, 1);
                 defenderGroup();
-                playerCharacters(playerChar);
+                playerCharacters(playerCharVal);
             }
         });
     };
@@ -74,6 +80,7 @@ $( document ).ready(function() {
     };
 
     function defenderGroup(){
+        $(".defender").remove();
         for (let i = 0; i < defenders.length; i++){
             let charBox = $("<div class='col-2-md mx-1 defender'>");
             let charStats = $("<div class='charBox pickDefender'>")
@@ -89,6 +96,8 @@ $( document ).ready(function() {
             if(pickedDefender === false){
                 pickedDefender = true;
                 defendChar = ($(this).attr("val"));
+                defenderHp = char[defendChar].hp;
+                counterAttack = char[defendChar].defense;
                 let battleName = char[defendChar].name;
                 let battleIndex = char.map(function (obj) { return obj.name; }).indexOf(battleName);
                 battleGroup(battleIndex);
@@ -111,19 +120,77 @@ $( document ).ready(function() {
             $( ".combatRow").append(charBox);
     };
     function buttonSwap (){
-        $(".comRow h3").html('<button type="button" class="btn btn-danger btn-large attack">ATTACK!</button>')
+        if (combatOver === false) {
+            $(".comRow h3").html('<button type="button" class="btn btn-danger btn-large attack">ATTACK!</button>')
+            attack();
+        }
+        else{
+            combatOver = false;
+            $(".comRow h3").html("Pick Another Defender");
+
+        }
     };
     function attack (def){
-        if (firstAttack === true){
-            fristAttack = false;
-            let defHp = char[def].hp;
-            defHP = defHp - attackValue;
+        let cDHp = defenderHp;
+        let cDcA = counterAttack;
+        $(".attack").click(function(){
+            cDHp = cDHp - playerAttackValue;
+            playerAttackValue = playerAttackValue + attackAdder;
+           if (cDHp <= 0){
+               alert("he's dead");
+               $(".combatRow .charHp").text("0");
+               pickedDefender = false;
+               $(".combatDefender").parent().remove();
+               combatOver = true;
+               endGameLogic();
+               defenderGroup();
+           }
+           else if ( playerHp - cDcA <= 0 ){
+               alert ("you're dead");
+               $(".playerRow .charHp").text("0");
+               $(".combatRow .charHp").text(cDHp);
+               resetGame();
 
+           }
+           
+           else { 
+                playerHp = playerHp - cDcA;
+                $(".combatRow .charHp").text(cDHp);
+                $(".playerRow .charHp").text(playerHp);
+            }
+        });
+
+        function endGameLogic (){
+            if (defenders.length <= 0 ){
+                gameOver = true;
+            }
+            if (gameOver === true && combatOver === true){
+                alert("GAME OVER");
+                resetGame();
+            }else{
+                buttonSwap();
+            }
+
+        }
+
+        function resetGame(){
+            $(".comRow h3").html('<button type="button" class="btn btn-success btn-large resetGame">Reset Game</button>');
+            $(".resetGame").click(function() {
+                $(".char").remove();
+                $(".defender").remove();
+                $(".combatDefender").parent().remove();
+                $(".comRow h3").empty();
+                $(".defRow h3").text("For Combat!");
+                defenders = [0, 1, 2, 3]
+                pickedCharacter = false;
+                pickedDefender = false;
+                combatOver = false;
+                gameOver = false;
+                startGame();
+            });
 
         }
     }
-    defendersTest();
-    // console.log(defendersArr);
     startGame();
  
 });
