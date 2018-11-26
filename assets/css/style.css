@@ -17,6 +17,10 @@
     height: 125px;
     border: black 2px solid;
     overflow: visible;
+    transition: all 0.3s;
+}
+.charBox:hover {
+    border-color: lightgrey;
 }
 .charName {
     text-align: center;
@@ -45,13 +49,13 @@
     transform: translate(-50%, 0);
     font-weight: bold;
 }
-.pickChar {
+.char .charBox {
     background-color: white;
 }
 .defRow, .comRow {
     height: 47px;
 }
-.pickDefender {
+.defender .charBox {
     background-color: red;
 }
 .pickDefender .charHp {
