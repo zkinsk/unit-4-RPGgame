@@ -1,3 +1,33 @@
+@font-face {
+    font-family: 'star_jedi_outlineregular';
+    src: url('../fonts/starjout-webfont.woff2') format('woff2'),
+         url('../fonts/starjout-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'star_jediregular';
+    src: url('../fonts/starjedi-webfont.woff2') format('woff2'),
+         url('../fonts/starjedi-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+h3 {
+    font-family: 'star_jediregular';
+    color: rgb(206, 206, 1);
+    /* color: #feda4a; */
+
+}
+h5 {
+    font-family: 'star_jediregular';
+    color: red;
+    /* color: #feda4a; */
+
+}
+
 #gameArea {
     /* width: 100%; */
     /* width: 100%; */

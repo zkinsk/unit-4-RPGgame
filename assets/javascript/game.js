@@ -69,7 +69,7 @@ $( document ).ready(function() {
                 playerCharacters(playerCharVal);
             }
         });
-    };
+    }
 // draw character row allowing for player character choice 
     function playerCharacters(x){
         if (pickedCharacter === false){
@@ -84,7 +84,7 @@ $( document ).ready(function() {
             defenders.splice(playerCharVal, 1);
             defenderGroup();
         }
-    };
+    }
 // draws defender row, allows for pick of defender to battle then moved battler to battle row
     function defenderGroup(){
         $(".defender").remove();
@@ -104,6 +104,7 @@ $( document ).ready(function() {
             }
         });
     }
+
     function buttonSwap (){
         if (combatOver === false) {
             $(".defenderText h3").text("Press Button to Attack " + char[defendChar].name + "!")
@@ -113,10 +114,12 @@ $( document ).ready(function() {
         else{
             combatOver = false;
             $(".defenderText h3").text("You have defeated " + char[defendChar].name + "!")
+            resetAttack();
             $(".combatText h3").html("Pick Another Defender");
 
         }
-    };
+    }
+
     function attack (def){
         let cDHp = defenderHp;
         let cDcA = counterAttack;
@@ -134,50 +137,59 @@ $( document ).ready(function() {
                $(".combatRow .charHp").text(cDHp);
                $(".charText h3").html("You were " + char[playerCharVal].name + "!");
                $(".playerRow").html("<h3>You have been defeated by " + char[defendChar].name + "!<h3>");
-               $(".defenderText h3").empty();
+               $(".defenderText h3, .combatText h3").empty();
+               resetAttack();
                resetGame();
            }
            else { 
                 playerHp = playerHp - cDcA;
                 $(".combatRow .charHp").text(cDHp);
                 $(".playerRow .charHp").text(playerHp);
+                $(".attackText h5").text("You hit " + char[defendChar].name + " for " + playerAttackValue + " damage!");
+                $(".defendText h5").text(char[defendChar].name + " Hits you for " + cDcA + " damage!");
+
             }
         });
+    }
 // controlls end game logic for whether to continue game or finish game
-        function endGameLogic (){
-            if (defenders.length <= 0 ){
-                gameOver = true;
-            }
-            if (gameOver === true && combatOver === true){
-                $(".defenderText h3").text("You have defeated " + char[defendChar].name + "!")
-                $(".combatRow").html("<h3>and Won the Game!</h3>");
-                resetGame();
-            }else{
-                pickedDefender = false;
-                buttonSwap();
-                defenderGroup();
-            }
-
+    function endGameLogic (){
+        if (defenders.length <= 0 ){
+            gameOver = true;
         }
+        if (gameOver === true && combatOver === true){
+            $(".defenderText h3").text("You have defeated " + char[defendChar].name + "!")
+            $(".combatRow").html("<h3>and Won the Game!</h3>");
+            resetAttack();
+            resetGame();
+        }else{
+            pickedDefender = false;
+            resetAttack();
+            buttonSwap();
+            defenderGroup();
+        }
+
+    }
 // resets all variables to restart the game
-        function resetGame(){
-            $(".combatText h3").html('<button type="button" class="btn btn-success btn-large resetGame">Reset Game</button>');
-            $(".resetGame").click(function() {
-                $(".char, .defender, .combatDefender").remove();
-                $(".combatText h3, .combatRow, .charText h3").empty();
-                $(".charText h3").text("Pick your Character");
-                $(".defenderText h3").text("For Combat!");
-                defenders = [0, 1, 2, 3]
-                pickedCharacter = false;
-                pickedDefender = false;
-                combatOver = false;
-                gameOver = false;
-                console.log("Test: " + test);
-                test ++;
-                startGame();
-            });
+    function resetGame(){
+        $(".combatText h3").html('<button type="button" class="btn btn-success btn-large resetGame">Reset Game</button>');
+        $(".resetGame").click(function() {
+            $(".char, .defender, .combatDefender").remove();
+            $(".combatText h3, .combatRow, .charText h3").empty();
+            $(".charText h3").text("Pick your Character");
+            $(".defenderText h3").text("For Combat!");
+            defenders = [0, 1, 2, 3]
+            pickedCharacter = false;
+            pickedDefender = false;
+            combatOver = false;
+            gameOver = false;
+            console.log("Test: " + test);
+            test ++;
+            startGame();
+        });
 
-        }
+    }
+    function resetAttack(){
+        $(".attackText h5, .defendText h5").empty();
     }
     startGame();
  
