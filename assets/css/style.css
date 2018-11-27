@@ -14,16 +14,22 @@
     font-style: normal;
 }
 
+/* *   {
+    transition: all 0.3s;
+} */
 
 h3 {
     font-family: 'star_jediregular';
-    color: rgb(206, 206, 1);
+    color: rgb(255, 225, 0);
     /* color: #feda4a; */
+    text-shadow: 0 0 4px black;
 
 }
 h5 {
     font-family: 'star_jediregular';
     color: red;
+    text-shadow: 0 0 0.1px black;
+    word-wrap: break-word;
     /* color: #feda4a; */
 
 }
@@ -82,7 +88,10 @@ h5 {
 .char .charBox {
     background-color: white;
 }
-.defRow, .comRow {
+.playerRow {
+    min-height: 47px;
+}
+.defenderText, .combatText {
     height: 47px;
 }
 .defender .charBox {
