@@ -13,7 +13,7 @@ var charCol = {
     mkRow: function (rowType, colType, loops, charIndex){
         $("." + rowType).empty().hide();
         for (let i = 0; i < loops; i++){
-            let charBox = $("<div class='col-2-md mx-1 " + colType + "'>");
+            let charBox = $("<div class='col-md-2 " + colType + "'>");
             let charStats = $("<div class='charBox'>")
                     .append("<div class='charName'>" + char[defenders[charIndex]].name)
                     .append("<div class='charImg'> <img src = " + char[defenders[charIndex]].image + ">")
@@ -28,8 +28,6 @@ var charCol = {
             });
         }
         $("." + rowType).fadeIn(300);
-
-
     }
 };
 // object to contain and play various sound effects
@@ -43,8 +41,6 @@ var gameSounds = {
     resetTracks: ["Falcon flyby 3.mp3","Jump to lightspeed.mp3","TIE fighter flyby 1.mp3", "Speeder bike flyby.mp3", "XWing flyby 3.mp3"],
     soundAff: function(eT){
         let x = (this.effectType[eT]);
-        // x = eval(this.x)
-        // let x = this.effectType[eT];
         let gA = (Math.floor(Math.random() * this[x].length));
         gameAudio = new Audio("assets/sounds/" + this[x][gA]);
         gameAudio.play();
@@ -65,17 +61,7 @@ var counterAttack;
 var playerCharVal;
 var playerHp;
 var defendChar;
-var defendersArr = [];
-var defendersTest = function (){
-    for (let i = 0; i < char.length; i++){
-        defendersArr.push(char[i].name)
-    }
-};
 var gameAudio;
-
-
-
-
 
 // functions!
 $( document ).ready(function() {
@@ -134,22 +120,26 @@ $( document ).ready(function() {
             }
         });
     }
-
+// swaps out attack button for text and vica versa
     function buttonSwap (){
         if (combatOver === false) {
             $(".defenderText h3").text("Press Button to Attack " + char[defendChar].name + "!")
+            $(".colText").removeClass("col-6")
+            $(".colText").addClass("col-3")
             $(".combatText h3").html('<button type="button" class="btn btn-danger btn-large attack">ATTACK!</button>')
             attack();
         }
         else{
             combatOver = false;
             $(".defenderText h3").text("You have defeated " + char[defendChar].name + "!")
+            $(".colText").removeClass("col-3")
+            $(".attackButton").addClass("col-6")
             $(".combatText h3").html("Pick Another Defender");
             resetAttack();
             
         }
     }
-
+// attack function - calculates hit point loss & whether player loses
     function attack (def){
         let cDHp = defenderHp;
         let cDcA = counterAttack;
@@ -185,10 +175,10 @@ $( document ).ready(function() {
                 $(".combatRow .charHp").text(cDHp);
                 $(".playerRow .charHp").text(playerHp);
                 $(".playerRow, .combatRow").hide().fadeIn(50);
-                $(".attackText h5, .defendText h5").hide();
-                $(".attackText h5").text("You hit " + char[defendChar].name + " for " + playerAttackValue + " damage!");
-                $(".defendText h5").text(char[defendChar].name + " Hits you for " + cDcA + " damage!");
-                $(".attackText h5, .defendText h5").fadeIn(400);
+                $(".attackText, .defendText").hide();
+                $(".attackText ").html("<h5>You hit " + char[defendChar].name + " for:</h5><h5> " + playerAttackValue + " damage!</h5>");
+                $(".defendText ").html("<h5>" + char[defendChar].name + " Hits you for:</h5><h5> " + cDcA + " damage!</h5>");
+                $(".attackText, .defendText").fadeIn(400);
             }
         });
     }
@@ -240,6 +230,7 @@ $( document ).ready(function() {
         
 
     }
+    // clears attack & defence call text
     function resetAttack(){
         $(".attackText h5, .defendText h5").hide(100).empty();
     }

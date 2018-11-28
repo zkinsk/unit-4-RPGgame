@@ -23,6 +23,7 @@ h3 {
     color: rgb(255, 225, 0);
     /* color: #feda4a; */
     text-shadow: 0 0 4px black;
+    text-align: center;
 
 }
 h5 {
@@ -30,6 +31,7 @@ h5 {
     color: red;
     text-shadow: 0 0 0.1px black;
     word-wrap: break-word;
+    text-align-last: center;
     /* color: #feda4a; */
 
 }
@@ -54,6 +56,8 @@ h5 {
     border: black 2px solid;
     overflow: visible;
     transition: all 0.3s;
+    margin-left: auto;
+    margin-right: auto;
 }
 .charBox:hover {
     border-color: lightgrey;
@@ -101,11 +105,14 @@ h5 {
     color: yellow;
  
 }
-.combatDefender {
+.combatDefender .charBox{
     color: white;
     background-color: black;
 }
 .combatDefender .charHp {
     color: white;
 
+}
+.attackButton h3 {
+    text-align: center;
 }
